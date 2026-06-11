@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Task-02 | Stopwatch</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <div class="bg-glow g1"></div>
+  <div class="bg-glow g2"></div>
+
+  <header class="header">
+    <div class="badge">PRODIGY INFOTECH — TASK 02</div>
+    <h1 class="page-title">Stopwatch</h1>
+  </header>
+
+  <main class="main">
+
+    <!-- ── CLOCK FACE ── -->
+    <div class="clock-wrap">
+      <svg class="ring-svg" viewBox="0 0 300 300">
+        <circle class="ring-bg"   cx="150" cy="150" r="130"/>
+        <circle class="ring-fill" cx="150" cy="150" r="130" id="ringFill"/>
+      </svg>
+      <div class="clock-face">
+        <span class="clock-label">ELAPSED TIME</span>
+        <div class="clock-display" id="display">
+          <span id="hrs">00</span><span class="sep">:</span><span id="mins">00</span><span class="sep">:</span><span id="secs">00</span><span class="ms" id="ms">.00</span>
+        </div>
+        <span class="clock-status" id="status">Ready</span>
+      </div>
+    </div>
+
+    <!-- ── CONTROLS ── -->
+    <div class="controls">
+      <button class="btn btn-start"  id="btnStart"  onclick="startStop()">
+        <span class="btn-icon">▶</span> Start
+      </button>
+      <button class="btn btn-lap"    id="btnLap"    onclick="lap()" disabled>
+        <span class="btn-icon">⚑</span> Lap
+      </button>
+      <button class="btn btn-reset"  id="btnReset"  onclick="reset()" disabled>
+        <span class="btn-icon">↺</span> Reset
+      </button>
+    </div>
+
+    <!-- ── LAP TABLE ── -->
+    <div class="lap-section" id="lapSection">
+      <div class="lap-header">
+        <h2>Lap Times</h2>
+        <span class="lap-count" id="lapCount">0 laps</span>
+      </div>
+      <div class="lap-list" id="lapList">
+        <div class="lap-empty">No laps recorded yet</div>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
