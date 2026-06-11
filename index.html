@@ -3,64 +3,224 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Task-02 | Stopwatch</title>
+  <title>Task-02 | Stopwatch — Prodigy Infotech</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="style.css"/>
+ <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 
   <div class="bg-glow g1"></div>
   <div class="bg-glow g2"></div>
+  <div class="bg-glow g3"></div>
 
+  <!-- HEADER -->
   <header class="header">
-    <div class="badge">PRODIGY INFOTECH — TASK 02</div>
+    <div class="badge">Prodigy Infotech — Task 02</div>
     <h1 class="page-title">Stopwatch</h1>
+    <p class="header-sub">Precision time tracking · Lap analysis · Real-time feedback</p>
   </header>
 
+  <!-- LIVE CLOCK BAR -->
+  <div class="live-clock-bar">
+    <span id="currentDate"></span>
+    <div class="live-clock-divider"></div>
+    <span id="currentTime"></span>
+  </div>
+
+  <!-- MAIN -->
   <main class="main">
+    <div class="three-col">
 
-    <!-- ── CLOCK FACE ── -->
-    <div class="clock-wrap">
-      <svg class="ring-svg" viewBox="0 0 300 300">
-        <circle class="ring-bg"   cx="150" cy="150" r="130"/>
-        <circle class="ring-fill" cx="150" cy="150" r="130" id="ringFill"/>
-      </svg>
-      <div class="clock-face">
-        <span class="clock-label">ELAPSED TIME</span>
-        <div class="clock-display" id="display">
-          <span id="hrs">00</span><span class="sep">:</span><span id="mins">00</span><span class="sep">:</span><span id="secs">00</span><span class="ms" id="ms">.00</span>
+      <!-- LEFT PANEL -->
+      <aside class="side-panel">
+
+        <!-- Features -->
+        <div class="panel-card">
+          <h3>Key Features</h3>
+          <ul class="feature-list">
+        
+  <li><span class="feat-icon">⏱</span>Centisecond-Level Accuracy</li>
+
+  <li><span class="feat-icon">🏁</span>Advanced Lap Tracking System</li>
+
+  <li><span class="feat-icon">📈</span>Automatic Lap Performance Analysis</li>
+
+  <li><span class="feat-icon">⚡</span>Live Session Statistics</li>
+
+  <li><span class="feat-icon">🎯</span>Dynamic SVG Progress Visualization</li>
+
+  <li><span class="feat-icon">⌨️</span>Keyboard Shortcut Support</li>
+</ul>
         </div>
-        <span class="clock-status" id="status">Ready</span>
+
+       
+
+        <!-- Keyboard shortcuts -->
+        <div class="panel-card">
+          <h3>Keyboard Shortcuts</h3>
+          <div class="shortcut-list">
+            <div class="shortcut-row"><span>Start / Pause</span><kbd class="kbd">Space</kbd></div>
+            <div class="shortcut-row"><span>Record Lap</span><kbd class="kbd">L</kbd></div>
+            <div class="shortcut-row"><span>Reset Timer</span><kbd class="kbd">R</kbd></div>
+          </div>
+        </div>
+
+      </aside>
+
+      <!-- CENTRE: CLOCK CARD -->
+      <section>
+        <div class="clock-card">
+
+          <!-- SVG Ring -->
+          <div class="clock-wrap">
+            <svg class="ring-svg" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%"   stop-color="#6c63ff"/>
+                  <stop offset="100%" stop-color="#00f5d4"/>
+                </linearGradient>
+              </defs>
+              <g id="ticks"></g>
+              <circle class="ring-bg"   cx="140" cy="140" r="120"/>
+              <circle class="ring-fill" cx="140" cy="140" r="120" id="ringFill"/>
+            </svg>
+            <div class="clock-face">
+              <span class="clock-label">Elapsed Time</span>
+              <div class="clock-display" id="display">
+                <span id="hrs">00</span><span class="sep">:</span><span id="mins">00</span><span class="sep">:</span><span id="secs">00</span><span class="ms" id="ms">.00</span>
+              </div>
+              <span class="clock-status" id="status">Ready</span>
+            </div>
+          </div>
+
+          <!-- Stats Row -->
+          <div class="stat-row">
+            <div class="stat-pill">
+              <span class="stat-pill-label">Best Lap</span>
+              <span class="stat-pill-value" id="statBest">—</span>
+            </div>
+            <div class="stat-pill">
+              <span class="stat-pill-label">Worst Lap</span>
+              <span class="stat-pill-value" id="statWorst">—</span>
+            </div>
+            <div class="stat-pill">
+              <span class="stat-pill-label">Total Laps</span>
+              <span class="stat-pill-value" id="statTotal">0</span>
+            </div>
+          </div>
+
+          <!-- Controls -->
+          <div class="controls">
+            <button class="btn btn-start" id="btnStart" onclick="startStop()">
+              <span class="btn-icon" id="startIcon">▶</span>
+              <span id="startLabel">Start</span>
+            </button>
+            <button class="btn btn-lap" id="btnLap" onclick="lap()" disabled>
+              <span class="btn-icon">⚑</span> Lap
+            </button>
+            <button class="btn btn-reset" id="btnReset" onclick="reset()" disabled title="Reset (R)">↺</button>
+          </div>
+
+          <!-- Lap Table -->
+          <div class="lap-section" id="lapSection">
+            <div class="lap-header">
+              <div class="lap-header-left">
+                <h2>Lap Times</h2>
+                <span class="lap-count" id="lapCount">0</span>
+              </div>
+              <button class="btn-clear" id="btnClear" onclick="clearLaps()" disabled>Clear</button>
+            </div>
+            <div class="lap-col-heads" id="lapColHeads" style="display:none">
+              <span>#</span><span>Split</span><span style="text-align:right">Δ Prev</span><span></span>
+            </div>
+            <div class="lap-list" id="lapList">
+              <div class="lap-empty" id="lapEmpty">Press Lap while running</div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- RIGHT PANEL -->
+      <aside class="side-panel">
+
+        <!-- About -->
+        <div class="panel-card">
+  <h3>Project Metrics</h3>
+
+  <div class="outcome-list">
+    <li>10ms Accuracy</li>
+    <li>100% Responsive</li>
+    <li>Zero Dependencies</li>
+    <li>Real-Time Updates</li>
+    <li>Interactive UI</li>
+    <li>Performance Optimized</li>
+  </div>
+</div>
+        <!-- Live Stats sidebar -->
+        <div class="panel-card">
+          <h3>Live Session Stats</h3>
+          <div class="stat-mini">
+            <div class="stat-mini-row">
+              <span class="stat-mini-label">Best lap</span>
+              <span class="stat-mini-val best" id="sideBest">—</span>
+            </div>
+            <div class="stat-mini-row">
+              <span class="stat-mini-label">Worst lap</span>
+              <span class="stat-mini-val worst" id="sideWorst">—</span>
+            </div>
+            <div class="stat-mini-row">
+              <span class="stat-mini-label">Average lap</span>
+              <span class="stat-mini-val" id="sideAvg">—</span>
+            </div>
+            <div class="stat-mini-row">
+              <span class="stat-mini-label">Laps recorded</span>
+              <span class="stat-mini-val" id="sideLaps">0</span>
+            </div>
+            <div class="stat-mini-row">
+              <span class="stat-mini-label">Timer status</span>
+              <span class="stat-mini-val" id="sideStatus">Ready</span>
+            </div>
+          </div>
+        </div>
+
+      <div class="panel-card">
+        <h3>How It Works</h3>
+
+        <div class="outcome-list">
+          <li>HTML</li>
+          <li>CSS</li>
+          <li>JAVASCRIPT</li>
+          <li>RESPONSIVE DESIGN</li>
+          <li>LIVE DATE & TIME</li>
+          <li>UI UX DESIGN</li>
+        </div>
+      </div>
+
+      </aside>
+
+    <!-- BOTTOM ABOUT CARDS -->
+    <div class="bottom-section">
+      <div class="bottom-grid">
+        <div class="about-card about-card--full">
+          <h3>Developer</h3>
+          <p>Developed by <strong style="color:var(--text)">Sandeep Kumar Bhardwaj</strong> as part of the Prodigy Infotech Web Development Internship. Task-02 focuses on interactive front-end development using core HTML, CSS, and JavaScript.</p>
+        </div>
       </div>
     </div>
-
-    <!-- ── CONTROLS ── -->
-    <div class="controls">
-      <button class="btn btn-start"  id="btnStart"  onclick="startStop()">
-        <span class="btn-icon">▶</span> Start
-      </button>
-      <button class="btn btn-lap"    id="btnLap"    onclick="lap()" disabled>
-        <span class="btn-icon">⚑</span> Lap
-      </button>
-      <button class="btn btn-reset"  id="btnReset"  onclick="reset()" disabled>
-        <span class="btn-icon">↺</span> Reset
-      </button>
-    </div>
-
-    <!-- ── LAP TABLE ── -->
-    <div class="lap-section" id="lapSection">
-      <div class="lap-header">
-        <h2>Lap Times</h2>
-        <span class="lap-count" id="lapCount">0 laps</span>
-      </div>
-      <div class="lap-list" id="lapList">
-        <div class="lap-empty">No laps recorded yet</div>
-      </div>
-    </div>
-
   </main>
 
-  <script src="script.js"></script>
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>Developed with ❤️ by <strong>Sandeep Kumar Bhardwaj</strong></p>
+    <p>Prodigy Infotech Internship · Task-02 Stopwatch Application</p>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="script.js">
+
+  </script>
 </body>
 </html>
